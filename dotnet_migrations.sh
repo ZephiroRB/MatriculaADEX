@@ -1,0 +1,1 @@
+dotnet ef migrations add $1 --project Matricula.Infrastructure --startup-project Matricula.WebUI

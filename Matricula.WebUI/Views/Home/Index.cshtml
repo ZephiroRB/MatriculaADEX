@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Adex Instituto de Educación Superior";
+}
+
+    <div class="row h-100">
+
+    
+    <div class="col-md-7  d-flex  hidden-xs-down hidden-sm-down hidden-md-down">
+        <div class="row justify-content-center align-self-center my-auto"> 
+       
+        <img src="~/images/Diciembre_NuevosIngresos.jpg" class="img-fluid" style="width:70%" alt="Responsive image">
+        </div>
+
+       
+         
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+         <div class="card shadow bg-white">
+        <div class="card-header">
+        <h2 class="title_matricula">Matricúlate ya <br><small>y obtén beneficios especiales</small></h2>
+        </div>
+
+        <div class="card-body py-1 px-1">
+            <div id="matricula">
+              
+                <div class="matricula overflow-auto">
+                    <div style="min-width: 400px">
+                        <form method="post" id="registro_matricula">
+                        <header>
+                            <div class="row">
+                               
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="studentSelect">Estudiante</label>
+                                       
+                                         
+                                         <select class="form-control form-control-lg"  id="studentSelect" name="studentSelect" data-msg="El estudiante no puede estar vacio">
+                                             <option value="" >Seleccionar Estudiante</option>
+                                            @{
+                                                foreach (var student in ViewBag.Students2)
+                                                {
+                                                    var idString =  student.Id.ToString();
+                                                    <option value="@idString" data-cycle="@student.Cycle">@student.FullName</option>
+                                                }
+                                            }
+                                         </select>
+
+                                       
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="shiftSelect">Turno</label>
+                                        <select class="form-control form-control-lg" asp-items="ViewBag.Shifts" id="shiftSelect"  name="shiftSelect" data-msg="El turno no puede estar vacio"></select>
+                                        
+                                    </div>
+
+                                   
+
+                                    <div class="form-group">
+                                        <label for="courseSelect">Curso</label>
+
+                                        <div class="input-group">
+                                             <select class="form-control form-control-lg" asp-items="ViewBag.Courses" id="courseSelect" name="courseSelect"></select>
+
+                                                <a class="btn btn-secondary btn_add" href="javascript:;">+</a>
+
+                                           
+                                        </div>
+                                         <label id="courseSelect-error" class="error_course" for="courseSelect">No se selecciono ningun curso</label>
+                                      
+                                    </div>
+
+                                </div>
+                            </div>
+                        </header>
+                       
+                        <main>
+                            <input type="hidden" name="listCourses" id="listCourses" value=""  data-msg="No se agregaron cursos">
+                            <table width="100%" id="courses">
+                               
+                                <tbody>
+                                    
+                                    
+                                   
+                                   
+                                </tbody>
+                               
+                            </table>
+
+                            <a class="btn btn-primary btn-lg btn-block" id="register" href="javascript:;">Registrar</a>
+                            
+                        </main>
+                         </form>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>

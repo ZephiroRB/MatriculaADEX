@@ -1,0 +1,1 @@
+dotnet ef database update --project Matricula.Infrastructure --startup-project Matricula.WebUI
