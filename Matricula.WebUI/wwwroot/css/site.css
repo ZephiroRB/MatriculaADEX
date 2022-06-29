@@ -300,19 +300,37 @@ body {
     }
 
 }
-input.error, select.error, input.error:focus, select.error:focus {
+
+.btn_add{
+    font-size: 20px;
+border-radius: 0px 5px 5px 0px;
+background: rgb(21, 41, 142);
+border: 0px;
+}
+input.error,
+select.error,
+input.error:focus,
+select.error:focus {
     border-color: #dc3545;
-    box-shadow: 0 0 10px #dc3545; 
+    box-shadow: 0 0 10px #dc3545;
     border-color: #dc3545;
 }
 
+.alert_content {
+    font-size: 1em;
+
+    color: #dc3545;
+}
 
 
-label.error, label.error_course{
+label.error,
+label.error_course {
     margin-top: .25rem;
-font-size: 1em;
-font-weight: bold;
-color: #dc3545;
+    font-size: 1em;
+    font-weight: bold;
+    color: #dc3545;
 }
 
-.error_course{display:none}
+.error_course {
+    display: none
+}

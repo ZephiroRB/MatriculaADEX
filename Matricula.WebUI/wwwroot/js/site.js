@@ -3,6 +3,15 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
+  function alertPopup(message) {
+    $("#dialog-confirm .alert_content").html(message);
+    $("#dialog-confirm").modal("show");
+  }
+
+  $(".btn_close_modal").click(function () {
+    $("#dialog-confirm").modal("hide");
+  });
+
   $("#registro_matricula").validate({
     ignore: [],
     rules: {
@@ -16,8 +25,16 @@ $(document).ready(function () {
     },
   });
 
-  $("#register").click(function () {
+  $("#register").click(function (e) {
+    e.preventDefault();
+
     $("#registro_matricula").submit();
+  });
+
+  $("#register").submit(function (e) {
+
+    //stop submitting the form to see the disabled button effect
+    e.preventDefault();
   });
 
   function loadCourse(cycle = 0, shiftId = "") {
@@ -32,15 +49,34 @@ $(document).ready(function () {
         },
         success: function (data) {
           var html = "";
-          $.each(data, function (key, value) {
-            html +=
-              "<option data-endtime='" + value.endTime + "' data-starttime='" + value.startTime + "' data-classroom='" + value.classRoom.name + "' data-capacity='" + value.capacity + "' data-shift='" + value.shift.name + "' value='" +
-              value.id +
-              "'>" +
-              value.course.name +
-              "</option>";
-          });
-          $("#courseSelect").html(html);
+
+          if (data.length > 0) {
+            $.each(data, function (key, value) {
+              html +=
+                "<option data-endtime='" +
+                value.endTime +
+                "' data-starttime='" +
+                value.startTime +
+                "' data-classroom='" +
+                value.classRoom.name +
+                "' data-capacity='" +
+                value.capacity +
+                "' data-shift='" +
+                value.shift.name +
+                "' value='" +
+                value.id +
+                "'>" +
+                value.course.name +
+                " (" +
+                value.startTime +
+                " - " +
+                value.endTime +
+                ")</option>";
+            });
+            $("#courseSelect").html(html);
+          } else {
+            alertPopup("Para el ciclo y turno seleccionado no hay cursos disponibles");
+          }
         },
       });
     } else {
@@ -74,8 +110,25 @@ $(document).ready(function () {
     var value = tr.find(".listCoursesTemp").val();
     var title = tr.find(".titleCourse").html();
 
+    var capacity = tr.find(".capacity").html();
+    var classRoom = tr.find(".classRoom").html();
+    var startTime = tr.find(".startTime").html();
+    var endTime = tr.find(".endTime").html();
+
     $("#courseSelect").append(
-      "<option value='" + value + "'>" + title + "</option>"
+      "<option data-endtime='" +
+        endTime +
+        "' data-starttime='" +
+        startTime +
+        "' data-classroom='" +
+        classRoom +
+        "' data-capacity='" +
+        capacity +
+        "' value='" +
+        value +
+        "'>" +
+        title +
+        "</option>"
     );
 
     $(this).closest("tr").remove();
@@ -98,30 +151,40 @@ $(document).ready(function () {
     $(".error_course").hide();
     $("#courseSelect").removeClass("error");
     if ($("#courseSelect option:selected").val()) {
-
-
       var scheduleInStorage = $("input[name='schedule[]']")
-      .map(function () {
-        return $(this).val();
-      })
-      .toArray();
+        .map(function () {
+          return $(this).val();
+        })
+        .toArray();
 
-      var scheduleCurrent = $("#courseSelect option:selected").data("starttime") + '-' + $("#courseSelect option:selected").data("endtime");
+      var scheduleCurrent =
+        $("#courseSelect option:selected").data("starttime") +
+        "-" +
+        $("#courseSelect option:selected").data("endtime");
 
       console.log(jQuery.inArray(scheduleCurrent, scheduleInStorage));
 
       if (jQuery.inArray(scheduleCurrent, scheduleInStorage) == 0) {
-        alert("La hora seleccionada ya esta asignada");
+        alertPopup("El curso que trata de añadir coincide en el horario con otro curso añadido");
         return false;
-      };
-
+      }
 
       row = $(
-        '<tr><td class="text-left"><input type="hidden" name="schedule[]" value="' + scheduleCurrent + '"><input type="hidden" name="listCoursesTemp[]" id="listCoursesTemp[]" class="listCoursesTemp" value="' +
+        '<tr><td class="text-left"><input type="hidden" name="schedule[]" value="' +
+          scheduleCurrent +
+          '"><input type="hidden" name="listCoursesTemp[]" id="listCoursesTemp[]" class="listCoursesTemp" value="' +
           $("#courseSelect option:selected").val() +
           '"> <h3 class="titleCourse">' +
           $("#courseSelect option:selected").text() +
-          '</h3>Capacidad: <span class="capacity">' + $("#courseSelect option:selected").data("capacity") + '</span> Aula: <span class="classRoom">' + $("#courseSelect option:selected").data("classroom") + '</span> Horario: <span class="startTime">' + $("#courseSelect option:selected").data("starttime") + '</span> - <span class="endTime">' + $("#courseSelect option:selected").data("endtime") + '</span></td><td class="no"><i class="fa fa-trash-can"></i></td></tr>'
+          '</h3><small>Capacidad: <span class="capacity">' +
+          $("#courseSelect option:selected").data("capacity") +
+          '</span> Aula: <span class="classRoom">' +
+          $("#courseSelect option:selected").data("classroom") +
+          '</span> <br>Horario: <span class="startTime">' +
+          $("#courseSelect option:selected").data("starttime") +
+          '</span> - <span class="endTime">' +
+          $("#courseSelect option:selected").data("endtime") +
+          '</span></small></td><td class="no"><i class="fa fa-trash-can"></i></td></tr>'
       );
       $("#courses").append(row);
       $("#courseSelect option:selected").remove();

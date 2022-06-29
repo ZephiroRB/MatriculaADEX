@@ -77,7 +77,7 @@ public class HomeController : Controller
   [HttpPost]
   public IActionResult GetCourses(int cycle, Guid shiftId)
   {
-    var courses = _context.ClassRoomCourses.Include(_ => _.ClassRoom).Include(_ => _.Shift).Include(_ => _.Course).Where(a => a.Cycle == cycle && a.ShiftId == shiftId && a.Capacity > 0).ToList();
+    var courses = _context.ClassRoomCourses.Include(_ => _.ClassRoom).Include(_ => _.Shift).Include(_ => _.Course).Where(a => a.Cycle == cycle && a.ShiftId == shiftId && a.Capacity > 0).OrderBy(_ => _.StartTime).ToList();
     return Json(courses);
   }
 

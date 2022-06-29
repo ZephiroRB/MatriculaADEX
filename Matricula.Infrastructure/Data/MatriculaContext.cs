@@ -9,13 +9,11 @@ namespace Matricula.Infrastructure.Data
 {
     public class MatriculaContext : DbContext
     {
-        // public  DbSet<Currency> Currencies { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<ClassRoomCourse> ClassRoomCourses { get; set; }
         public DbSet<EnrollmentDetail> EnrollmentDetails { get; set; }
-        
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<ClassRoom> ClassRooms { get; set; }
 
@@ -38,42 +36,7 @@ namespace Matricula.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
-
-
-            // modelBuilder.Entity<Industry>()
-            //     .HasMany(c => c.Companies)
-            //     .WithOne(c => c.Industry)
-            //     .HasForeignKey(c => c.IndustryId)
-            //     .IsRequired(false);
-
-            // modelBuilder.Entity<Member>()
-            //     .HasMany(m => m.Groups)
-            //     .WithMany(g => g.Members)
-            //     .UsingEntity<MemberGroup>(
-            //         mg => mg.HasOne(g => g.Group).WithMany().HasForeignKey(g => g.GroupId),
-            //         mg => mg.HasOne(m => m.Member).WithMany().HasForeignKey(m => m.MemberId),
-            //         mg =>
-            //         {
-            //             mg.HasKey(m => new { m.GroupId, m.MemberId });
-            //         }
-            //     );
-
-            // modelBuilder.Entity<GroupTaxonomy>()
-            //     .HasKey(m => new { m.GroupId, m.TaxonomyId });
-
-
-            // modelBuilder.Entity<MemberTaxonomy>()
-            //     .HasKey(m => new { m.MemberId, m.TaxonomyId });
-
-
-            // modelBuilder.Entity<Project>()
-            //     .HasMany(p => p.Groups)
-            //     .WithOne(g => g.Project)
-            //     .HasForeignKey(g => g.ProjectId);
-
-            // base.OnModelCreating(modelBuilder);
-
+          
         }
     }
 }
