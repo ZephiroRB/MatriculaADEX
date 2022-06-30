@@ -85,6 +85,7 @@ public class HomeController : Controller
   [HttpPost, ValidateAntiForgeryToken]
   public IActionResult Index(EnrollmentModel model)
   {
+    
     if (ModelState.IsValid)
     {
       var student = _context.Students.Where(a => a.Id == model.studentSelect).FirstOrDefault();

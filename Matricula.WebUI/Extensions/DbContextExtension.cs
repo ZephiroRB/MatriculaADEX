@@ -17,9 +17,12 @@ public static class DbContextExtension
       var dbPassword = Environment.GetEnvironmentVariable("DATABASE_PASSWORD");
       var dbName = Environment.GetEnvironmentVariable("DB_NAME");
 
-      var connectionString = $"Server={dbHost};port={dbPort};user id={dbUser};password={dbPassword};database={dbName};pooling=true";
+      //PostgreSQL
+      //var connectionString = $"Server={dbHost};port={dbPort};user id={dbUser};password={dbPassword};database={dbName};pooling=true";
+      //MS SQL
+      var connectionString = $"Server={dbHost};Database={dbName};User={dbUser};Password={dbPassword};";
 
-      opt.UseNpgsql(connectionString);
+      opt.UseSqlServer(connectionString);
     }, ServiceLifetime.Scoped);
 
     builder.Services.AddScoped<MatriculaContext>(

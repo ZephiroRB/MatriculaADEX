@@ -29,9 +29,9 @@ namespace Matricula.Infrastructure.Data
             var dbPassword = Environment.GetEnvironmentVariable("DATABASE_PASSWORD");
             var dbName = Environment.GetEnvironmentVariable("DB_NAME");
              
-            var connectionString = $"Server={dbHost};port={dbPort};user id={dbUser};password={dbPassword};database={dbName};pooling=true";
+            var connectionString = $"Server={dbHost};Database={dbName};User={dbUser};Password={dbPassword};";
 
-            options.UseNpgsql(connectionString);
+            options.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
